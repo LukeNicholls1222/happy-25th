@@ -1,0 +1,100 @@
+:root {
+  --sky: #5c94fc;
+  --ink: #000;
+  --paper: #fff;
+  --red: #d82800;
+  --gold: #f8b800;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; height: 100%; background: #000; overflow: hidden; touch-action: manipulation; }
+body { font-family: 'DotGothic16', 'Press Start 2P', monospace; color: var(--paper); }
+
+/* 内部解像度 240x320 をそのまま整数倍で拡大する */
+#stage {
+  position: relative;
+  width: 240px; height: 320px;
+  transform-origin: top left;
+  image-rendering: pixelated;
+}
+#game { display: block; width: 240px; height: 320px; image-rendering: pixelated; image-rendering: crisp-edges; }
+#ui { position: absolute; inset: 0; pointer-events: none; }
+.screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.screen > * { pointer-events: auto; }
+.hidden { display: none !important; }
+
+/* ---------- タイトル ---------- */
+#s-title { justify-content: flex-start; padding-top: 30px; }
+.title-wrap { text-align: center; font-family: 'Press Start 2P', monospace; text-shadow: 2px 2px 0 #000; line-height: 1; }
+.title-super { font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px; }
+.title-main { font-size: 28px; color: var(--paper); }
+.title-25 {
+  font-size: 40px; color: var(--red);
+  -webkit-text-stroke: 1px #fff;
+  margin-top: 6px;
+  animation: bounce 1s steps(2) infinite;
+}
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.hint { font-size: 9px; margin: 6px 0 0; text-shadow: 1px 1px 0 #000; color: #fff; }
+
+/* ---------- ボタン ---------- */
+.nes-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #fff; background: var(--red);
+  border: 0; padding: 8px 10px;
+  box-shadow: inset -2px -2px 0 #7a1400, inset 2px 2px 0 #ff7a5c, 2px 2px 0 #000;
+  cursor: pointer; margin-top: 22px;
+}
+.nes-btn:active { transform: translate(1px,1px); box-shadow: inset 2px 2px 0 #7a1400, 1px 1px 0 #000; }
+.nes-btn.small { font-size: 8px; padding: 6px 8px; margin-top: 8px; }
+.nes-btn.tiny { font-size: 7px; padding: 4px 5px; margin: 0; }
+.nes-btn.ghost { background: #000c; box-shadow: 0 0 0 1px #fff; }
+.blink { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.sound { position: absolute; top: 4px; right: 4px; pointer-events: auto; }
+.skip { position: absolute; bottom: 6px; right: 6px; margin: 0; }
+
+/* ---------- 名前の吹き出し ---------- */
+#s-intro { justify-content: flex-start; }
+.namebox {
+  position: absolute; top: 34px; left: 50%; transform: translateX(-50%);
+  background: #000; color: #fff; border: 2px solid #fff;
+  padding: 5px 8px; font-size: 10px; white-space: nowrap;
+  opacity: 0; transition: opacity .15s steps(2);
+}
+.namebox.show { opacity: 1; }
+
+/* ---------- ダイアログ（NES風） ---------- */
+.dialog {
+  background: #000; border: 2px solid #fff; outline: 2px solid #000;
+  padding: 8px; width: 216px; font-size: 10px; line-height: 1.7;
+}
+.dialog p { margin: 0; }
+.dialog .sub { font-size: 8px; color: #bbb; }
+.dialog.top { position: absolute; top: 10px; }
+.dialog.bottom { position: absolute; top: 8px; }
+.dialog.center { position: absolute; top: 90px; }
+.q { font-size: 12px; text-align: center; margin-bottom: 6px !important; }
+.choices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.choices button {
+  font-family: 'Press Start 2P', monospace; font-size: 10px;
+  background: #fff; color: #000; border: 0; padding: 7px 0;
+  box-shadow: 2px 2px 0 #000; cursor: pointer;
+}
+.choices button:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #000; }
+.choices button.no { background: #555; color: #999; }
+.answer { text-align: center; min-height: 1.7em; color: var(--gold); margin-top: 6px !important; }
+.answer.shake { animation: shake .3s steps(4); }
+@keyframes shake { 25% { transform: translateX(-2px);} 75% { transform: translateX(2px);} }
+
+/* ---------- 息ゲージ ---------- */
+.meter { position: absolute; bottom: 30px; width: 180px; height: 10px; background: #000; border: 2px solid #fff; }
+.meter-fill { height: 100%; width: 0%; background: var(--gold); }
+.counter { position: absolute; bottom: 14px; font-size: 9px; text-shadow: 1px 1px 0 #000; }
+
+/* ---------- 最後 ---------- */
+.hbd { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--gold); text-align: center; margin-bottom: 4px !important; }
+#message { font-size: 10px; line-height: 1.6; }
+#message p { margin: 0; min-height: 1.2em; }
+.from { text-align: right; font-size: 9px; color: #bbb; margin-top: 4px !important; }
+#s-end .nes-btn { display: block; margin: 4px auto 0; }
