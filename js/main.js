@@ -228,7 +228,9 @@
   // ---------- ループ（描画60fps、ロジック12fps） ----------
   let acc = 0, last = performance.now();
   function loop(now) {
-    acc += now - last; last = now;
+    // アプリを切り替えて戻ってきたとき、止まっていた分を一気に進めない。
+    // 進めると「おめでとう」などの演出が一瞬で飛ぶ。
+    acc = Math.min(acc + (now - last), 250); last = now;
     while (acc >= 1000 / 12) {
       acc -= 1000 / 12; f++;
       if (state === 'intro') tickIntro();
