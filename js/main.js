@@ -105,7 +105,7 @@
   $('btn-skip').onclick = () => { ORDER.forEach((k) => { actors[k].x = actors[k].sp.slot; actors[k].walking = false; actors[k].shown = true; }); introDone = true; introWait = 6; $('namebox').classList.remove('show'); };
 
   // ---------- ろうそく ----------
-  let candles = [], charging = false, charge = 0, candlesDoneWait = 0;
+  let candles = [], charging = false, charge = 0, candlesDoneWait = 0, pressAt = 0;
   function startCandles() {
     state = 'candles'; show('s-candles');
     candles = Wd.cakeLayout().map((c) => ({ ...c, lit: true, smoke: 0 }));
@@ -125,7 +125,7 @@
     if (k && !candles.some((c) => c.lit)) { candlesDoneWait = 36; Wd.confetti(50); SFX.up(); }
   }
   function tickCandles() {
-    if (charging) { charge = Math.min(1, charge + 0.06); updateCandleUI(); }
+    if (charging) { charge = Math.min(1, (performance.now() - pressAt) / 1500); updateCandleUI(); }
     candles.forEach((c) => { if (c.smoke > 0) c.smoke--; });
     if (candlesDoneWait) { if (--candlesDoneWait <= 0) startQuiz(); }
   }
@@ -135,8 +135,8 @@
     drawFamily(false);
   }
   const stage = $('stage');
-  const press = (e) => { if (state !== 'candles' || candlesDoneWait) return; if (e.target && e.target.closest && e.target.closest('button')) return; charging = true; if (e.cancelable) e.preventDefault(); };
-  const release = () => { if (state !== 'candles' || !charging) return; charging = false; blow(); };
+  const press = (e) => { if (state !== 'candles' || candlesDoneWait) return; if (e.target && e.target.closest && e.target.closest('button')) return; charging = true; pressAt = performance.now(); if (e.cancelable) e.preventDefault(); };
+  const release = () => { if (state !== 'candles' || !charging) return; charging = false; charge = Math.min(1, (performance.now() - pressAt) / 1500); blow(); };
   stage.addEventListener('pointerdown', press); stage.addEventListener('touchstart', press, { passive: false }); stage.addEventListener('mousedown', press);
   ['pointerup', 'pointercancel', 'touchend', 'mouseup'].forEach((ev) => addEventListener(ev, release));
 
@@ -194,10 +194,10 @@
     Wd.background(ctx, f);
     drawFamily(false);
     // 横断幕
-    ctx.fillStyle = '#000'; ctx.fillRect(30, 172, 180, 24);
+    ctx.fillStyle = '#000'; ctx.fillRect(30, 262, 180, 26);
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#f8b800'; ctx.font = '10px "DotGothic16"'; ctx.fillText(`${CFG.name || 'おかあさん'}`, 120, 183);
-    ctx.fillStyle = '#fff'; ctx.font = '9px "Press Start 2P"'; ctx.fillText(`${CFG.date || '9.25'}  ${CFG.age || 25}`, 120, 193);
+    ctx.fillStyle = '#f8b800'; ctx.font = '10px "DotGothic16"'; ctx.fillText(`${CFG.name || 'おかあさん'}`, 120, 274);
+    ctx.fillStyle = '#fff'; ctx.font = '9px "Press Start 2P"'; ctx.fillText(`${CFG.date || '9.25'}  ${CFG.age || 25}`, 120, 284);
     ctx.textAlign = 'left';
   }
   $('btn-again').onclick = () => { state = 'title'; show('s-title'); blockHit = false; resetActors(); Wd.particles.length = 0; };
