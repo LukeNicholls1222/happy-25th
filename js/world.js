@@ -7,15 +7,15 @@
   // 並び順は左から。お母さんが真ん中。
   const FAMILY = [
     { key: 'dad', name: 'おとうさん', cm: 185, build: 2, hair: 'helmet', hairColor: '#2a2a2a', gray: true,
-      top: '#2050b0', pants: '#202020', shoes: '#111', prop: 'bike', slot: 44, phase: 0 },
+      top: '#8c8c8c', pants: '#1a1a1a', shoes: '#000', prop: 'bike', slot: 44, phase: 0 },
     { key: 'bro', name: 'おにいちゃん', cm: 180, build: 1, hair: 'short', hairColor: '#111',
-      top: '#3c3c3c', pants: '#1a3a70', shoes: '#111', prop: 'laptop', slot: 82, phase: 5 },
+      top: '#262626', pants: '#141414', shoes: '#000', prop: 'laptop', slot: 82, phase: 5 },
     { key: 'mom', name: 'おかあさん', cm: 170, build: 0, hair: 'bobLong', hairColor: '#111',
-      top: '#e04878', pants: '#5a4a8a', shoes: '#333', prop: 'broom', apron: true, slot: 120, phase: 9 },
-    { key: 'boy', name: 'おとうと', cm: 179, build: 0, baggy: true, hair: 'centerPart', hairColor: '#111',
-      top: '#20b0e8', top2: '#0060a0', pants: '#f8b800', shoes: '#111', prop: 'skis', slot: 160, phase: 3 },
-    { key: 'sis', name: 'いもうと', cm: 160, build: 0, hair: 'long', hairColor: '#8a4a1a',
-      top: '#f8c0d0', pants: '#3a5aa0', shoes: '#333', prop: 'dog', slot: 194, phase: 12 },
+      top: '#262626', pants: '#141414', shoes: '#000', prop: 'broom', slot: 120, phase: 9 },
+    { key: 'boy', name: 'おとうと', cm: 179, build: 0, baggy: 2, hair: 'centerPart', hairColor: '#111',
+      top: '#5a3ad0', top2: '#3a2090', pants: '#1a1a1a', shoes: '#000', prop: 'skis', slot: 160, phase: 3 },
+    { key: 'sis', name: 'いもうと', cm: 160, build: 0, baggy: 1, hair: 'long', hairColor: '#8a4a1a',
+      top: '#222', top2: '#111', pants: '#4a70b8', shoes: '#000', prop: 'dog', slot: 194, phase: 12 },
   ];
 
   // ---------- 背景 ----------

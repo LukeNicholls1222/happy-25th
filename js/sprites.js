@@ -188,7 +188,7 @@
     const build = sp.build || 0;
     const headW = headH + (build >= 2 ? 1 : 0);
     const torsoH = Math.round(H * 0.32);
-    const torsoW = 9 + build * 2 + (sp.baggy ? 2 : 0);
+    const torsoW = 9 + build * 2 + (sp.baggy || 0) * 2;
     const legH = H - headH - torsoH - 1;
     const bob = opt.walking ? ((f % 2) ? -1 : 0) : (((f + (sp.phase || 0)) % 16) < 8 ? 0 : -1);
     const y0 = gy + bob;
@@ -205,7 +205,7 @@
     if (sp.hair === 'long') hair(ctx, sp, g); // ロングは体の後ろに垂れる
 
     // 脚
-    const lw = Math.max(2, Math.round(torsoW / 3)) + (sp.baggy ? 1 : 0);
+    const lw = Math.max(2, Math.round(torsoW / 3)) + (sp.baggy || 0);
     const stride = opt.walking ? ((f % 2) ? 1 : -1) : 0;
     const lx = tx + 1 + stride, rx = tx + torsoW - 1 - lw - stride;
     r(ctx, lx, legTop, lw, legH, sp.pants);
