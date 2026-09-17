@@ -95,7 +95,12 @@
     // 手前のものを後に描く（歩いてくる人は手前）
     const list = ORDER.map((k) => actors[k]).filter((a) => !skipHidden || a.shown || a.walking);
     list.sort((p, q) => (p.walking ? 1 : 0) - (q.walking ? 1 : 0));
-    list.forEach((a) => figure(ctx, Math.round(a.x), Wd.GY, a.sp, f, { walking: a.walking }));
+    const HOP = [0, 3, 5, 6, 6, 5, 3];
+    list.forEach((a, i) => {
+      let hop = 0;
+      if (celebrate > 0) { const ph = (f + i * 2) % 14; hop = ph < 7 ? HOP[ph] : 0; }
+      figure(ctx, Math.round(a.x), Wd.GY - hop, a.sp, f, { walking: a.walking });
+    });
   }
   function drawIntro() {
     Wd.background(ctx, f);
@@ -105,11 +110,11 @@
   $('btn-skip').onclick = () => { ORDER.forEach((k) => { actors[k].x = actors[k].sp.slot; actors[k].walking = false; actors[k].shown = true; }); introDone = true; introWait = 6; $('namebox').classList.remove('show'); };
 
   // ---------- ろうそく ----------
-  let candles = [], charging = false, charge = 0, candlesDoneWait = 0, pressAt = 0;
+  let candles = [], charging = false, charge = 0, candlesDoneWait = 0, pressAt = 0, celebrate = 0;
   function startCandles() {
     state = 'candles'; show('s-candles');
     candles = Wd.cakeLayout().map((c) => ({ ...c, lit: true, smoke: 0 }));
-    charge = 0; charging = false; candlesDoneWait = 0; updateCandleUI();
+    charge = 0; charging = false; candlesDoneWait = 0; celebrate = 0; $('cheer').classList.add('hidden'); updateCandleUI();
   }
   function updateCandleUI() {
     const left = candles.filter((c) => c.lit).length;
@@ -122,17 +127,28 @@
     // 息は左から順に届く
     candles.filter((c) => c.lit).sort((a, b) => a.x - b.x).slice(0, n).forEach((c) => { c.lit = false; c.smoke = 12; k++; });
     charge = 0; SFX.blow(); updateCandleUI();
-    if (k && !candles.some((c) => c.lit)) { candlesDoneWait = 36; Wd.confetti(50); SFX.up(); }
+    if (k && !candles.some((c) => c.lit)) {
+      // 全部消えた。家族が跳ねて、花火が上がって、「おめでとう!!」
+      candlesDoneWait = 66; celebrate = 66;
+      Wd.confetti(80); SFX.fanfare();
+      setTimeout(() => $('cheer').classList.remove('hidden'), 250);
+    }
   }
   function tickCandles() {
     if (charging) { charge = Math.min(1, (performance.now() - pressAt) / 1500); updateCandleUI(); }
     candles.forEach((c) => { if (c.smoke > 0) c.smoke--; });
+    if (celebrate > 0) {
+      celebrate--;
+      if (f % 4 === 0) Wd.burst(30 + Math.random() * 180, 30 + Math.random() * 120, 16);
+      if (f % 6 === 0) SFX.coin();
+    }
     if (candlesDoneWait) { if (--candlesDoneWait <= 0) startQuiz(); }
   }
   function drawCandles() {
     Wd.background(ctx, f);
     Wd.cake(ctx, f, candles);
     drawFamily(false);
+    if (celebrate > 62) { ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fillRect(0, 0, Wd.W, Wd.H); }
   }
   const stage = $('stage');
   const press = (e) => { if (state !== 'candles' || candlesDoneWait) return; if (e.target && e.target.closest && e.target.closest('button')) return; charging = true; pressAt = performance.now(); if (e.cancelable) e.preventDefault(); };
