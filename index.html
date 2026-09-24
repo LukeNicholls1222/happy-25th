@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>SUPER MAMA 25</title>
+<title>SUPER MAMA 45</title>
 <meta name="description" content="お誕生日おめでとう">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 <div id="stage">
@@ -20,10 +20,16 @@
       <div class="title-wrap">
         <div class="title-super">SUPER</div>
         <div class="title-main">MAMA</div>
-        <div class="title-25">25</div>
+        <div class="title-25">45</div>
       </div>
       <button class="nes-btn blink" id="btn-start">PRESS START</button>
       <p class="hint">画面をタップ</p>
+    </section>
+
+    <!-- 横スクロールのステージ -->
+    <section class="screen hidden" id="s-run">
+      <div class="runmsg" id="runmsg"></div>
+      <div class="clear hidden" id="clear">COURSE CLEAR!</div>
     </section>
 
     <!-- 登場シーン中のセリフ -->
@@ -39,7 +45,7 @@
         <p class="sub">画面を <b>長押し</b> して 息をためて、はなす</p>
       </div>
       <div class="meter"><div class="meter-fill" id="breath"></div></div>
-      <div class="counter" id="candle-left">のこり 25</div>
+      <div class="counter" id="candle-left">のこり 45</div>
       <div class="cheer hidden" id="cheer">
         <div class="cheer-main">おめでとう!!</div>
         <div class="cheer-sub">ろうそく ぜんぶ けせた!</div>
@@ -61,6 +67,8 @@
         <p class="hbd">HAPPY BIRTHDAY</p>
         <div id="message"></div>
         <p class="from" id="from"></p>
+        <p class="result" id="result"></p>
+        <p class="perfect hidden" id="perfect">★ PERFECT ★</p>
         <button class="nes-btn small" id="btn-again">もういちど</button>
       </div>
     </section>
@@ -68,9 +76,10 @@
     <button class="nes-btn tiny sound" id="btn-sound" aria-label="音">♪ ON</button>
   </div>
 </div>
-<script src="config.js?v=8"></script>
-<script src="js/sprites.js?v=8"></script>
-<script src="js/world.js?v=8"></script>
-<script src="js/main.js?v=8"></script>
+<script src="config.js?v=10"></script>
+<script src="js/sprites.js?v=10"></script>
+<script src="js/world.js?v=10"></script>
+<script src="js/run.js?v=10"></script>
+<script src="js/main.js?v=10"></script>
 </body>
 </html>

@@ -73,9 +73,11 @@
   }
 
   // ---------- ケーキ ----------
-  const CANDLES = 25;
+  const CANDLES = (window.CONFIG && CONFIG.age) || 45;
   function cakeLayout() {
-    const rows = [[8, 90], [8, 120], [9, 150]]; // [本数, 段の上面y]
+    // 段の幅に比例して本数を振り分ける
+    const top = Math.round(CANDLES * 92 / 348), mid = Math.round(CANDLES * 116 / 348);
+    const rows = [[top, 90], [mid, 120], [CANDLES - top - mid, 150]]; // [本数, 段の上面y]
     const out = [];
     rows.forEach(([n, y], i) => {
       const w = [92, 116, 140][i], x0 = 120 - w / 2;
